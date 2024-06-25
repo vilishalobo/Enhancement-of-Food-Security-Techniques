@@ -33,7 +33,7 @@ jobs:
       working-directory: appfrontend
       
     - name: Compile Smart Contracts
-      run: hardhat compile
+      run: npx hardhat compile
       
     - name: Build Frontend
       run: CI=false npm run build --if-present #Override default behaviour as CI=true treats warnings as errors and fails build.
@@ -44,4 +44,4 @@ jobs:
       working-directory: appfrontend
 
     - name: Test Smart Contracts
-      run: hardhat test
+      run: npx hardhat test
