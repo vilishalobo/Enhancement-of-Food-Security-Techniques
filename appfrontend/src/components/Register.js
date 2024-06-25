@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
-import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
-import Paper from "@material-ui/core/Paper";
-import Backdrop from '@material-ui/core/Backdrop';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import Divider from '@material-ui/core/Divider';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import Paper from "@mui/material/Paper";
+import Backdrop from '@mui/material/Backdrop';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import Divider from '@mui/material/Divider';
 
 import { USER_TYPES } from "./enum/UsersEnum";
 
@@ -27,10 +27,9 @@ import "../css/NewUser.css";
  * 
  * @author syuki
  */
-const Register = ({drizzle, drizzleState, isAuthenticated}) => {
+const Register = ({contract, currentAddress, isAuthenticated}) => {
 
     const navigate = useNavigate();
-    const accountAddress = drizzleState.accounts[0];
 
     useEffect(() => {
         if(isAuthenticated){
@@ -47,7 +46,7 @@ const Register = ({drizzle, drizzleState, isAuthenticated}) => {
                     </IconButton>
                     <center>
                         <Typography component="h1" variant="h5" style={{ fontWeight: "500" }}>Register</Typography>
-                        <p>Choose your account type for the address <b>{accountAddress}</b></p>
+                        <p>Choose your account type for the address <b>{currentAddress}</b></p>
                         <Grid 
                             container 
                             color="secondary" 

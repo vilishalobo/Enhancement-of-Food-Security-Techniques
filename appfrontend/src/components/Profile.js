@@ -1,7 +1,7 @@
-import React from "react"; 
-
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
+import React, { useState, useEffect } from "react"; 
+import { ethers } from "ethers";
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
 
 
 import "../css/Profile.css";
@@ -11,8 +11,21 @@ import "../css/Profile.css";
  * 
  * @author syuki
  */
-export default ({ drizzle, drizzleState, userType, close, open, anchorEl, profilePicturePath }) => {
+export default ({ currentAddress, userType, close, open, anchorEl, profilePicturePath }) => {
     
+    const [balance, setBalance] = useState();
+
+     async function getUserAccountBalance(){
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const accountBalance = await provider.getBalance(currentAddress);
+        // Fixing the account balance to 4 decimal units.
+        setBalance(parseFloat(ethers.utils.formatEther(accountBalance)).toFixed(4));
+    }
+
+    useEffect(() => {
+        getUserAccountBalance();
+    }, [])
+
     return(
         <Menu
                 className="profile-menu"
@@ -43,11 +56,12 @@ export default ({ drizzle, drizzleState, userType, close, open, anchorEl, profil
                 <div className="profile-details">
                     <div style={{ paddingBottom: "24px" }}>
                         <h4>Account Address</h4> 
-                        <p>{drizzleState.accounts[0]}</p>
+                        <p>{currentAddress}</p>
                     </div>
                     <div>
                         <h4>Account Balance</h4> 
-                        <p>{drizzleState.accountBalances[drizzleState.accounts[0]]} <b>wei</b></p>
+                        {/* fetch user account balance */}
+                        <p>{balance} <b>ETH</b></p>
                     </div>
                 </div>
             </div>

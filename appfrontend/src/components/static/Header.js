@@ -1,13 +1,13 @@
 import React, { useState } from 'react';  
 import { NavLink } from 'react-router-dom';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';  
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';  
 
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import { USER_TYPES } from '../enum/UsersEnum';
 
@@ -20,7 +20,7 @@ import '../../css/App.css';
  * 
  * @author syuki
  */
-export default function Header({isAuthenticated, userType, drizzle, drizzleState}) {
+export default function Header({isAuthenticated, userType, contract, currentAddress}) {
 
     const [showProfile, setShowProfile] = useState();
     const [anchorEl, setAnchorEl] = useState();
@@ -68,8 +68,7 @@ export default function Header({isAuthenticated, userType, drizzle, drizzleState
                         open={showProfile} 
                         close={toggleProfile}
                         userType={userType} 
-                        drizzle={drizzle} 
-                        drizzleState={drizzleState}
+                        currentAddress={currentAddress}
                         anchorEl={anchorEl}
                         profilePicturePath={profilePicture}
                     />

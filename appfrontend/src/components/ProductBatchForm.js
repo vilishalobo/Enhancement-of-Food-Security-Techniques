@@ -1,14 +1,14 @@
 import React from "react"; 
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
-import Grid from "@material-ui/core/Grid";
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogActions from '@mui/material/DialogActions';
+import Grid from "@mui/material/Grid";
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
 
 import "../css/PopUpModal.css";
 
@@ -39,18 +39,12 @@ export default class ProductBatchForm extends React.Component {
         this.props.showLoaderScreen();
         let formData = this.state;
         let updatedPrice = this.addZeroesForDecimals(formData.prodPrice);
-        this.props.contractName.methods.produceProduct(
+        this.props.contractName.produceProduct(
             formData.prodName,
             formData.prodDesc,
             parseInt(updatedPrice),
             parseInt(formData.prodQty),
             this.props.currentAddress
-        )
-        .send(
-            {
-                from: this.props.currentAddress,
-                gas: 1000000
-            }
         )
         .then((receipt) => {
             this.props.setTransactionSuccess(true);

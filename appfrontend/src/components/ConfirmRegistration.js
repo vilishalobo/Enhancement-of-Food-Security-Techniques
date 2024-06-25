@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Paper from "@material-ui/core/Paper";
-import Backdrop from '@material-ui/core/Backdrop';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import Divider from '@material-ui/core/Divider';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Paper from "@mui/material/Paper";
+import Backdrop from '@mui/material/Backdrop';
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import Divider from '@mui/material/Divider';
 
 import { CircularPageLoader } from "./static/CircularPageLoader";
 
@@ -25,7 +25,7 @@ import "../css/NewUser.css";
  * 
  * @author syuki
  */
-const ConfirmRegistration = ({drizzle, drizzleState, isAuthenticated}) => {
+const ConfirmRegistration = ({contract, currentAddress, isAuthenticated}) => {
 
     const [showLoader, setShowLoader] = useState();
 
@@ -42,28 +42,23 @@ const ConfirmRegistration = ({drizzle, drizzleState, isAuthenticated}) => {
         let method = null;
         switch(location.state.type) {
             case USER_TYPES[0]:
-                method = drizzle.contracts.SupplyChainLifecycle.methods["addProducer"];
+                method = contract["addProducer"];
                 break;
             case USER_TYPES[1]:
-                method = drizzle.contracts.SupplyChainLifecycle.methods["addDistributor"];
+                method = contract["addDistributor"];
                 break;   
             case USER_TYPES[2]:
-                method = drizzle.contracts.SupplyChainLifecycle.methods["addRetailer"];
+                method = contract["addRetailer"];
                 break; 
         }
         return method;
     }
 
-    function addNewUser() {
+    async function addNewUser() {
         setShowLoader(true);
         const contractMethod = getContractMethod();
-        contractMethod(drizzleState.accounts[0])
-        .send(
-            {
-                from: drizzleState.accounts[0],
-                gas: 1000000
-            } 
-        )
+
+        contractMethod(currentAddress)
         .then((receipt) => {
             console.log(receipt);
             setShowLoader(false);
@@ -115,9 +110,9 @@ const ConfirmRegistration = ({drizzle, drizzleState, isAuthenticated}) => {
                                 </Grid>
                             </Grid>
                             <br/>
-                            Powered by <Link className="ModalLink" href="https://mui.com/" target="_blank" >material-ui</Link> and 
+                            Powered by <Link className="ModalLink" href="https://mui.com/" target="_blank" >material-ui</Link> and {" "}
                             <Link className="ModalLink" href="https://reactjs.org/" target="_blank" 
-                            > {" "}React</Link> &copy; {new Date().getFullYear()} 
+                            >React</Link> &copy; {new Date().getFullYear()} 
                     </center>
                 </Paper>
             </Backdrop>

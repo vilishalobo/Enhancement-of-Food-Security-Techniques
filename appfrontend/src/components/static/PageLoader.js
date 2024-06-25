@@ -1,9 +1,9 @@
 import React from "react"; 
 
-import LinearProgress  from '@material-ui/core/LinearProgress';
-import Backdrop from '@material-ui/core/Backdrop';
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
+import LinearProgress  from '@mui/material/LinearProgress';
+import Backdrop from '@mui/material/Backdrop';
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 import '../../css/App.css';
 

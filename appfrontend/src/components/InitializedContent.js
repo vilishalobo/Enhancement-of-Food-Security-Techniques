@@ -24,19 +24,20 @@ import "../css/App.css";
  * 
  * @author syuki
  */
-export const InitializedContent = ({drizzle, drizzleState}) => {
+export const InitializedContent = ({contract, currentAddress}) => {
 
     const [isAuth, setIsAuth] = useState();
     const [userType, setUserType] = useState();
 
-    const contract = drizzle.contracts.SupplyChainLifecycle;
-
     //If the user is registered as at least one role, they're allowed access to the application content.
     useEffect(() => {
+        //Clear location state.
+        window.history.replaceState({}, '');
+
         let retailerResult = null;
         let producerResult = null;
-
-        contract.methods.isRetailer().call().then((receipt) => {
+        
+        contract.connect(currentAddress).isRetailer().then((receipt) => {
                     console.log(receipt);
                     retailerResult = receipt;
                     if(receipt){
@@ -46,7 +47,7 @@ export const InitializedContent = ({drizzle, drizzleState}) => {
                     console.log(error);
                     retailerResult = false;
                 });
-        contract.methods.isProducer().call().then((receipt) => {
+        contract.connect(currentAddress).isProducer().then((receipt) => {
                     console.log(receipt);
                     producerResult = receipt;
                     if(receipt){
@@ -56,7 +57,7 @@ export const InitializedContent = ({drizzle, drizzleState}) => {
                     console.log(error);
                     producerResult = false;
                 });
-        contract.methods.isDistributor().call().then((receipt) => {
+        contract.connect(currentAddress).isDistributor().then((receipt) => {
                     console.log(receipt);
                     if(receipt){
                         setUserType(USER_TYPES[1]);
@@ -80,16 +81,16 @@ export const InitializedContent = ({drizzle, drizzleState}) => {
     if(isAuth != undefined) {
         return (
             <Router>
-                <Header isAuthenticated={isAuth} userType={userType} drizzle={drizzle} drizzleState={drizzleState} /> 
+                <Header isAuthenticated={isAuth} userType={userType} contract={contract} currentAddress={currentAddress} /> 
                 <div>
                     <Routes>
                         {/* Registered users are redirected to the home page, un-registered users go to the register/sign-up page. */}
                         <Route exact path="/new-user" element={<NewUser isAuthenticated={isAuth} />} /> 
-                        <Route exact path="/register" element={<Register drizzle={drizzle} drizzleState={drizzleState} isAuthenticated={isAuth} />} /> 
-                        <Route exact path="/confirm-registration" element={<ConfirmRegistration drizzle={drizzle} drizzleState={drizzleState} isAuthenticated={isAuth} />} />   
+                        <Route exact path="/register" element={<Register contract={contract} currentAddress={currentAddress} isAuthenticated={isAuth} />} /> 
+                        <Route exact path="/confirm-registration" element={<ConfirmRegistration contract={contract} currentAddress={currentAddress} isAuthenticated={isAuth} />} />   
                         <Route exact path="/registration-success" element={<RegistrationSuccess isAuthenticated={isAuth} />} />   
                         <Route exact path="/registration-failure" element={<RegistrationFailure isAuthenticated={isAuth} />} />   
-                        <Route exact path="/" element={<HomeWrapper drizzle={drizzle} drizzleState={drizzleState} isAuthenticated={isAuth} userType={userType} updateAuth={updateIsAuth} updateUserType={updateUserType} />} /> 
+                        <Route exact path="/" element={<HomeWrapper contract={contract} currentAddress={currentAddress} isAuthenticated={isAuth} userType={userType} updateAuth={updateIsAuth} updateUserType={updateUserType} />} /> 
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </div>
@@ -97,6 +98,6 @@ export const InitializedContent = ({drizzle, drizzleState}) => {
             </Router>
         );
     } else {
-        return (<CircularPageLoader open = "true" />);
+        return (<CircularPageLoader open = {true} />);
     }
 }

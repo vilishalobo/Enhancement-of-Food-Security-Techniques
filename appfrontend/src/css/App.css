@@ -12,7 +12,7 @@
 }
 
 .backdrop-design {
-  background-image: url(/BG.png);
+  background-image: url(../../public/BG.png);
   background-position: left top;
   background-size: cover;
 }

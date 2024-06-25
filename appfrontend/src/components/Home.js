@@ -1,13 +1,13 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-import Button from '@material-ui/core/Button';
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import AppBar from "@material-ui/core/AppBar";
-import Paper from "@material-ui/core/Paper";
+import Button from '@mui/material/Button';
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import AppBar from "@mui/material/AppBar";
+import Paper from "@mui/material/Paper";
 
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@mui/icons-material/Add';
 
 import {PRODUCT_STATUSES, STATUS_ACTIONS} from './enum/ProductStatusEnum';
 import {USER_TYPES} from './enum/UsersEnum';
@@ -23,6 +23,8 @@ import ErrorBoundary from "./ErrorBoundary";
 import { CircularPageLoader } from "./static/CircularPageLoader";
 
 import "../css/App.css";
+
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 
 const cols = [
   { field: "productID", title: "Product ID", numeric: true, align: "left" },
@@ -42,7 +44,7 @@ export default class Home extends React.Component {
 
     state = { 
         tabValue: 0,
-        dataKey: null, 
+        cachedResult: null, 
         showAddBatch: false,
         showConfirmAction: false,
         showBatchDetails: false,
@@ -52,20 +54,16 @@ export default class Home extends React.Component {
         productId: null,
         transactionSuccess: null,
         retailerDataKey: null,
-        isAuthenticated: null,
-        addressZero: "0x0000000000000000000000000000000000000000"
+        isAuthenticated: null
     };
 
-    componentDidMount() {
-        const { drizzle } = this.props;
-        const contract = drizzle.contracts.SupplyChainLifecycle;
-        const key = contract.methods.getAllProductDetails.cacheCall();
-        this.setState({ dataKey: key });
+    async getProductList(){
+        const result = await this.props.contract.getAllProductDetails();
+        this.setState({ cachedResult: result });
     }
 
-    getLifeCycleContract() {
-        const { SupplyChainLifecycle } = this.props.drizzleState.contracts;
-        return SupplyChainLifecycle;
+    componentDidMount() {
+        this.getProductList();
     }
 
     disableActionButton(action){
@@ -93,7 +91,7 @@ export default class Home extends React.Component {
                 statusAction = STATUS_ACTIONS[5];
             }
             else if(productDetails["productStatus"] == 6 
-                && productDetails["retailerAddresses"] == this.state.addressZero){
+                && productDetails["retailerAddresses"] == ADDRESS_ZERO){
                 statusAction = STATUS_ACTIONS[2];
             } else if(productDetails["productStatus"] > 2){
                 statusAction = STATUS_ACTIONS[7];
@@ -101,10 +99,10 @@ export default class Home extends React.Component {
         }
         if(this.props.userType == USER_TYPES[2]){
             if(productDetails["productStatus"] == 4
-                && productDetails["retailerAddresses"] != this.state.addressZero){
+                && productDetails["retailerAddresses"] !== ADDRESS_ZERO){
                 statusAction = STATUS_ACTIONS[5];
             } else if (productDetails["productStatus"] == 6 
-                        && productDetails["retailerAddresses"] != this.state.addressZero){
+                        && productDetails["retailerAddresses"] !== ADDRESS_ZERO){
                 statusAction = STATUS_ACTIONS[4];
             } else if (productDetails["productStatus"] == 5){
                 statusAction = STATUS_ACTIONS[6];
@@ -127,12 +125,12 @@ export default class Home extends React.Component {
         if(this.props.userType == USER_TYPES[1]){
             //Manages payment statuses - PAID and SOLD, depending on the user type.
             if(productDetails["productStatus"] == 6 
-                && productDetails["retailerAddresses"] == this.state.addressZero){
+                && productDetails["retailerAddresses"] == ADDRESS_ZERO){
                 productStatuses = PRODUCT_STATUSES[6];
             } 
             //Abstracts all statuses after payment to SOLD. 
             else if(productDetails["productStatus"] > 4 
-                && productDetails["retailerAddresses"] != this.state.addressZero){
+                && productDetails["retailerAddresses"] !== ADDRESS_ZERO){
                 productStatuses = PRODUCT_STATUSES[7];
             }
         }
@@ -143,19 +141,19 @@ export default class Home extends React.Component {
         return number/100;
     }
 
-    getProductDetails(contractName) {
-        const productDetailsArray = contractName.getAllProductDetails[this.state.dataKey];
+    getProductDetails() {
+        let productDetailsArray = this.state.cachedResult;
         let rows = [];
-        if(productDetailsArray && productDetailsArray.value.length > 0){
-            productDetailsArray.value.forEach(productDetails => {
+        if(productDetailsArray && productDetailsArray.length > 0){
+            productDetailsArray.forEach(productDetails => {
                 const status = this.fetchProductStatuses(productDetails);
                 const action = this.fetchProductStatusActions(productDetails);
                 const newRow = {
-                    productId: productDetails["productId"],
+                    productId: parseInt(productDetails["productId"]),
                     productName: productDetails["productName"], 
                     productDesc: productDetails["productDesc"], 
                     productPrice: this.convertToDecimal(productDetails["productPrice"]),
-                    productQuantity: productDetails["productQuantity"],
+                    productQuantity: parseInt(productDetails["productQuantity"]),
                     consumerAddress: productDetails["consumerAddress"], 
                     currentUser: productDetails["currentStatusUser"], 
                     distributorAddress: productDetails["distributorAddress"],
@@ -188,7 +186,10 @@ export default class Home extends React.Component {
             return rows.filter((row) => row.productStatus != PRODUCT_STATUSES[0]
                                         && row.productStatus != PRODUCT_STATUSES[1]
                                         && row.productStatus != PRODUCT_STATUSES[2]
-                                        && row.productStatus != PRODUCT_STATUSES[7]).reverse();
+                                        && row.productStatus != PRODUCT_STATUSES[7]
+                                        && !(row.productStatus == PRODUCT_STATUSES[6] 
+                                                && row.retailerAddresses == ADDRESS_ZERO)
+                            ).reverse();
         }
         return rows.filter((row) => !row.disableActionButton).reverse();
     }
@@ -270,13 +271,12 @@ export default class Home extends React.Component {
             //Updates registration state globally to render header and footer.
             this.props.updateAuth(true);
 
-            //Updates user type for new user registration.
+            //Updates userType to the new user type chosen for new user registration for consistent usage in the code.
             if(this.props.newUserType){
                 this.props.updateUserType(this.props.newUserType);
             }
 
-            const SupplyChainLifecycle = this.getLifeCycleContract();
-            const rows = this.getProductDetails(SupplyChainLifecycle);
+            const rows = this.getProductDetails();
             const activeBatches = this.fetchActiveBatches(rows);
             const previousBatches = this.fetchPreviousBatches(rows);
 
@@ -344,8 +344,8 @@ export default class Home extends React.Component {
                                 <ProductBatchForm 
                                     open={this.state.showAddBatch} 
                                     closePopup={() => this.hideAddBatchPopUp()}
-                                    contractName={this.props.drizzle.contracts.SupplyChainLifecycle}
-                                    currentAddress={this.props.drizzleState.accounts[0]}
+                                    contractName={this.props.contract}
+                                    currentAddress={this.props.currentAddress}
                                     showLoaderScreen={() => this.showLoader()}
                                     hideLoaderScreen={() => this.hideLoader()}
                                     setTransactionSuccess={(status) => this.setTransactionSuccess(status)}
@@ -371,10 +371,10 @@ export default class Home extends React.Component {
                                 <PerformStatusAction 
                                     open={this.state.showConfirmAction} 
                                     closePopup={() => this.hideConfirmActionPopUp()} 
-                                    contractName={this.props.drizzle.contracts.SupplyChainLifecycle}
+                                    contractName={this.props.contract}
                                     action={this.state.actionState}
                                     productId={this.state.productId}
-                                    currentAddress={this.props.drizzleState.accounts[0]}
+                                    currentAddress={this.props.currentAddress}
                                     showLoaderScreen={() => this.showLoader()}
                                     hideLoaderScreen={() => this.hideLoader()}
                                     setTransactionSuccess={(status) => this.setTransactionSuccess(status)}
