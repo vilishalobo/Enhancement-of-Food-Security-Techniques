@@ -12,8 +12,6 @@ Tools and versions used -
 - Solidity v0.8.17
 - MUI v5.15.20
 
-Additionally, the frontend is powered by *material-ui* v5.x.
-
 ## Code Structure
 The ReactJs part of the code goes under `appfrontend`, smart contracts under `contracts`, and deployment configurations for these smart contracts under `scripts`.
 
