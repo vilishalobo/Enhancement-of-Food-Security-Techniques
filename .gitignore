@@ -2,3 +2,7 @@ node_modules
 build
 appfrontend/src/contracts
 .DS_Store
+
+#Hardhat files
+cache
+artifacts

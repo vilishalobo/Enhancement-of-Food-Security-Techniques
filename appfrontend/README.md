@@ -5,7 +5,7 @@ Is bootstrapped with [Create React App](https://github.com/facebook/create-react
 ## Code Structure
 All the logos and images go under the `public` folder and all the code under `src`. 
 
-`App.js` is the main app file. It checks if Drizzle is initialized and handles loading of all the components. 
+`Dapp.js` is the main app file. It checks if the user account is initialized and handles loading of all the components. 
 All the components go under `src/components/` and the CSS files under `src/css/`. All the static components like headers and footers are stored in `src/components/static/` and enums and other constants in `src/components/enums/`
 
 ## Available Scripts

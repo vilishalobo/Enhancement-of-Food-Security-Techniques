@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Paper from "@material-ui/core/Paper";
-import Backdrop from '@material-ui/core/Backdrop';
-import LockIcon from '@material-ui/icons/Lock';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import Divider from '@material-ui/core/Divider';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Paper from "@mui/material/Paper";
+import Backdrop from '@mui/material/Backdrop';
+import LockIcon from '@mui/icons-material/Lock';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import Divider from '@mui/material/Divider';
 
 import "../../css/NewUser.css";
 
@@ -68,9 +68,9 @@ const NewUser = ({isAuthenticated}) => {
                             </Grid>
                         </Grid>
                         <br/>
-                        Powered by <Link className="ModalLink" href="https://mui.com/" target="_blank" >material-ui</Link> and 
+                        Powered by <Link className="ModalLink" href="https://mui.com/" target="_blank" >material-ui</Link> and {" "}
                         <Link className="ModalLink" href="https://reactjs.org/" target="_blank" 
-                        > {" "}React</Link> &copy; {new Date().getFullYear()} 
+                        >React</Link> &copy; {new Date().getFullYear()} 
                     </center>
                 </Paper>
             </Backdrop>

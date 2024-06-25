@@ -1,7 +1,7 @@
 import React from "react"; 
 
-import CircularProgress  from '@material-ui/core/CircularProgress';
-import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress  from '@mui/material/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
 
 import '../../css/App.css';
 

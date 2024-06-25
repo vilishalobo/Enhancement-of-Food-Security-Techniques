@@ -1,24 +1,23 @@
 # A Blockchain Based Supply Chain Management System
 
 ## Dependencies
-Built upon one of the Truffle boxes; [drizzle](https://trufflesuite.com/boxes/), which helps integrate ReactJs with blockchain smart contracts.
+Built upon the [Hardhat boilerplate code](https://github.com/NomicFoundation/hardhat-boilerplate), which helps integrate ReactJs with blockchain smart contracts.
 
 Tools and versions used -
 
-- Node v16.15.0
-- npm v8.5.5
-- Ganache client v2.5.4
-- Truffle v5.5.12
-- Solidity v0.5.16
-- Web3.js v1.5.3
+- Node v20.12.0
+- npm v10.5.0
+- Hardhat v2.12.5
+- Ethers v5.4.7
+- Solidity v0.8.17
+- MUI v5.15.20
 
-Additionally, the frontend is powered by *material-ui* v4.x.
+Additionally, the frontend is powered by *material-ui* v5.x.
 
 ## Code Structure
-The ReactJs part of the code goes under `appfrontend`, smart contracts under `contracts`, and migration configurations for these smart contracts under `migrations`.
-Configurations for connecting to local blockchain - Ganache, and compiling the contracts are written in the `truffle-config.js` file.
+The ReactJs part of the code goes under `appfrontend`, smart contracts under `contracts`, and deployment configurations for these smart contracts under `scripts`.
 
-Frontend uses the compiled contracts to interact with them. The compiled contracts are stored in `appfrontend/src/contracts/` (as configured in the `truffle-config.js` file), and are read internally in the `appfrontend/src/drizzleOptions.js` file. The expected contracts and events are configured here.
+Frontend uses the compiled contracts to interact with them. The compiled contracts are stored in `appfrontend/src/contracts/` (as configured in the `deploy.js` file) and are accessed directly from the `.json` files.
 
 Frontend images for current state of the application are stored in the `images/currentstate` folder.
 
@@ -28,20 +27,17 @@ To know more about what's part of the frontend code, check out the README file i
 
 ### Install the Required Dependencies
 
-- Clone the project and run `npm install` in both the root and `appfrontend` folders. This should install most of the required dependencies. If a dependency conflict between react and material-ui versions pops up, install them forcefully with `npm install --force`.
-- Additionally, install Truffle for managing contracts using `npm install truffle@5.5.12 -g`.
-- Install the Ganache client from Truffle's [official website](https://trufflesuite.com/ganache/).
-- Get the MetaMask browser extension. Create a test network that points to the local Ganache network, import the Ganache accounts into MetaMask and use them to access the application. Without MetaMask, the application takes the first Ganache address available.
+- Clone the project and run `npm install` in both the root and `appfrontend` folders. This should install most of the required dependencies.
+- Get the MetaMask browser extension. Create a test network that points to the local Hardhat network (http://127.0.0.1:8545/), import the Hardhat accounts into MetaMask and use them to access the application. Without MetaMask, the application asks users to download wallet extensions like [Coinbase](https://www.coinbase.com/wallet) or [Metamask](https://metamask.io).
 
 ### Configure the Project
 
-- Open up Ganache and create a new workspace.
-- Update `truffle-config.js` file with the workspace's network details. Connect the project to the workspace by linking the config file in the workspace's settings. 
-- Use Truffle commands `truffle compile` and `truffle migrate` to compile and deploy the smart contracts to the new Ganache workspace. To deploy specifically to the `dev` environment, suffix `--network dev` to the above commands. Similarly, suffix `--network <network_name>` for any custom network names. 
-- If updating any folder names in the frontend code, please note that the path for storing the compiled contracts needs to be modified in the `truffle-config.js` file.
-- The migrations should successfully go through and the workspace should be updated with the contract deployment details.
+- Open up the console in the root project directory and run a new local Hardhat network with `npx hardhat node` to work on a local chain.
+- Use Hardhat commands `npx hardhat compile` to compile the smart contracts, and `npx hardhat run scripts/deploy.js --network localhost` to deploy specifically to the `localhost` environment.
+- If updating any folder names in the frontend code, please note that the path for storing the compiled contracts might need to be modified in the `scripts/deploy.js` file.
+- The migrations should successfully go through and the local Hardhat node should be updated with the contract deployment details.
  
-For more commands, please refer to Truffle's [guides and tutorials](https://trufflesuite.com/docs/truffle/).
+For more commands, please refer to Hardhat's [guides and tutorials](https://hardhat.org/tutorial).
 
 ### Get the Frontend Running
 Navigate to the `appfrontend` folder and run `npm start`. This should start the application and open it up in `localhost:3000`. Register with one of the MetaMask accounts as either a producer, distributor, or a retailer. 
@@ -51,7 +47,7 @@ Navigate to the `appfrontend` folder and run `npm start`. This should start the 
 </p>
 
 ## Current Functionalities
-Currently uses the first available address to carry out these functionalities and works only for one producer, distributor and retailer user accounts. 
+Currently integrates with the available wallet address to carry out these functionalities and works only for one producer, distributor and retailer user accounts.
 
 In general, users can -
 - update the status of batches,

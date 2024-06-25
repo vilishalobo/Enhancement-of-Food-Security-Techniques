@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import Typography from '@material-ui/core/Typography';
-import Paper from "@material-ui/core/Paper";
-import Backdrop from '@material-ui/core/Backdrop';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import Divider from '@material-ui/core/Divider';
+import Typography from '@mui/material/Typography';
+import Paper from "@mui/material/Paper";
+import Backdrop from '@mui/material/Backdrop';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import Divider from '@mui/material/Divider';
 
 import "../../css/NewUser.css";
 
@@ -33,7 +33,7 @@ const RegistrationFailure = ({isAuthenticated}) => {
     useEffect(() => {
         setTimeout(() => {
         navigate('/new-user')
-        }, 5000)
+        }, 7000)
     }, []);
 
     return (

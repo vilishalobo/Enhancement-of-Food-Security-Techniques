@@ -53,7 +53,7 @@ contract SupplyChainLifecycle is Producer, Retailer, Distributor {
     event Paid(uint productID);
     event Sold(uint productID);
 
-   constructor() public payable {
+   constructor() {
        productID = 0;
    }
 

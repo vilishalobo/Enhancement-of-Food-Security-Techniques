@@ -1,10 +1,10 @@
 import React from "react"; 
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
-import Grid from "@material-ui/core/Grid";
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogActions from '@mui/material/DialogActions';
+import Grid from "@mui/material/Grid";
 
 import {STATUS_ACTIONS} from './enum/ProductStatusEnum';
 
@@ -23,25 +23,25 @@ export default class PerformStatusAction extends React.Component {
         if(action != null && this.props.contractName != null){
             switch(action) {
                 case STATUS_ACTIONS[0]:
-                    method = this.props.contractName.methods["markProductReadyForPickup"];
+                    method = this.props.contractName["markProductReadyForPickup"];
                     break;
                 case STATUS_ACTIONS[1]:
-                    method = this.props.contractName.methods["pickUpProduct"];
+                    method = this.props.contractName["pickUpProduct"];
                     break;
                 case STATUS_ACTIONS[2]:
-                    method = this.props.contractName.methods["releaseProductShipment"];
+                    method = this.props.contractName["releaseProductShipment"];
                     break;
                 case STATUS_ACTIONS[3]:
-                    method = this.props.contractName.methods["receiveProductShipment"];
+                    method = this.props.contractName["receiveProductShipment"];
                     break;
                 case STATUS_ACTIONS[4]:
-                    method = this.props.contractName.methods["markProductReadyForSale"];
+                    method = this.props.contractName["markProductReadyForSale"];
                     break;
                 case STATUS_ACTIONS[5]:
-                    method = this.props.contractName.methods["buyProduct"];
+                    method = this.props.contractName["buyProduct"];
                     break;
                 case STATUS_ACTIONS[6]:
-                    method = this.props.contractName.methods["sellProductToConsumer"];
+                    method = this.props.contractName["sellProductToConsumer"];
                     break;
             }
         }
@@ -54,12 +54,6 @@ export default class PerformStatusAction extends React.Component {
         if(contractMethod != null){
             contractMethod(
                 this.props.productId
-            )
-            .send(
-                {
-                    from: this.props.currentAddress,
-                    gas: 1000000
-                } 
             )
             .then((receipt) => {
                 this.props.setTransactionSuccess(true);
