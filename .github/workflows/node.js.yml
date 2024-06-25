@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.15.0]
+        node-version: [20.12.0]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -24,19 +24,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        
-    - name: Install Truffle v5.5.12 Globally
-      run: npm install truffle@5.5.12 -g
       
     - name: Install Dependencies from Main Lockfile
       run: npm ci
       
     - name: Install Dependencies from Frontend Lockfile
-      run: npm ci --force
+      run: npm ci
       working-directory: appfrontend
       
     - name: Compile Smart Contracts
-      run: truffle compile
+      run: hardhat compile
       
     - name: Build Frontend
       run: CI=false npm run build --if-present #Override default behaviour as CI=true treats warnings as errors and fails build.
@@ -47,4 +44,4 @@ jobs:
       working-directory: appfrontend
 
     - name: Test Smart Contracts
-      run: truffle test
+      run: hardhat test
