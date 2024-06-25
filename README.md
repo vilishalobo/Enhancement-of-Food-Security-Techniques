@@ -1,5 +1,8 @@
 # A Blockchain Based Supply Chain Management System
 
+## Hardhat Migration
+In light of Truffle and Ganache's sunset, the project has been migrated to Hardhat. The old Truffle code  can be accessed from the `truffle_version` branch in this repository.
+
 ## Dependencies
 Built upon the [Hardhat boilerplate code](https://github.com/NomicFoundation/hardhat-boilerplate), which helps integrate ReactJs with blockchain smart contracts.
 
@@ -27,7 +30,7 @@ To know more about what's part of the frontend code, check out the README file i
 
 ### Install the Required Dependencies
 
-- Clone the project and run `npm install` in both the root and `appfrontend` folders. This should install most of the required dependencies.
+- Clone the project and run `npm install` in both the root and `appfrontend` folders. This should install all of the required dependencies.
 - Get the MetaMask browser extension. Create a test network that points to the local Hardhat network (http://127.0.0.1:8545/), import the Hardhat accounts into MetaMask and use them to access the application. Without MetaMask, the application asks users to download wallet extensions like [Coinbase](https://www.coinbase.com/wallet) or [Metamask](https://metamask.io).
 
 ### Configure the Project
