@@ -4,7 +4,6 @@ import React from 'react';
  * Generic error handling component.
  * Triggers an error toast.
  * 
- * @author syuki
  */
 class ErrorBoundary extends React.Component {
     constructor(props) {

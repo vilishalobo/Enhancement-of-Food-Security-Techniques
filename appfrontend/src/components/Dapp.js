@@ -14,7 +14,6 @@ const HARDHAT_NETWORK_ID = '31337';
  * The main app component. The main paths and components are called from here.
  * Wallet initialization state is checked here. User and contract details are passed down to the child components when required.
  * 
- * @author syuki
  */
 export class Dapp extends React.Component {
   constructor(props) {

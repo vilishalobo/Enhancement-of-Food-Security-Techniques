@@ -8,7 +8,6 @@ import '../../css/App.css';
 /**  
  * A transparent circular page loader.
  * 
- * @author syuki
 */
 export const CircularPageLoader = (props) => (
     <div> 

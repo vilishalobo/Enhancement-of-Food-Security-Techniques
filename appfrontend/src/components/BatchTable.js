@@ -13,8 +13,6 @@ import Paper from '@mui/material/Paper';
 /**
  * Component to render tables. 
  * Takes row and column details as input props.
- * 
- * @author syuki
  */
 export default class BatchTable extends React.Component {
 

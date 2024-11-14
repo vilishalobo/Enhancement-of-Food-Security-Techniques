@@ -13,7 +13,6 @@ import "../../css/Footer.css";
 /**
  * Footer component. Present in every page when user is an authenticated one.
  * 
- * @author syuki
  */
 export default function Footer({isAuthenticated}) {
     if(!isAuthenticated){

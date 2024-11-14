@@ -14,7 +14,6 @@ import "../css/PopUpModal.css";
  * Component to update the status of a batch by interacting with the contracts. 
  * Takes product ID and the action to be performed as input props.
  * 
- * @author syuki
  */
 export default class PerformStatusAction extends React.Component {
 

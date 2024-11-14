@@ -16,7 +16,6 @@ import "../css/PopUpModal.css";
  * Component to add new batch details to the blockchain by interacting with the contracts.
  * Takes these details as input from the user.
  * 
- * @author syuki
  */
 export default class ProductBatchForm extends React.Component {
 

@@ -25,7 +25,6 @@ import "../css/NewUser.css";
  *  - Distributors, 
  *  - Retailers.
  * 
- * @author syuki
  */
 const Register = ({contract, currentAddress, isAuthenticated}) => {
 

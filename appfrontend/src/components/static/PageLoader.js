@@ -9,8 +9,6 @@ import '../../css/App.css';
 
 /**  
  * A linear progress bar loader.
- * 
- * @author syuki
 */
 export const PageLoader = () => (
     <div> 

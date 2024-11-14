@@ -2,8 +2,7 @@ import React from "react";
 
 /**
  * Helper text displayed when no wallets are detected by the browser.
- * 
- * @author syuki
+ *
  */
 export function NoWalletDetected() {
   return (

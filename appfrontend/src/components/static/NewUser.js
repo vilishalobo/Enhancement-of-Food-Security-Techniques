@@ -19,7 +19,6 @@ import "../../css/NewUser.css";
  * Prompts unregistered users to sign-up.
  * Unregistered users can sign up as producers, distributors, retailers here.
  * 
- * @author syuki
  */
 const NewUser = ({isAuthenticated}) => {
 

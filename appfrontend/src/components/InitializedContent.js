@@ -8,9 +8,7 @@ import Register from "./Register";
 import ConfirmRegistration from "./ConfirmRegistration";
 
 import Header from "./static/Header";
-import Footer from "./static/Footer";
 import { CircularPageLoader } from "./static/CircularPageLoader";
-import NotFound from "./static/NotFound";
 import NewUser from "./static/NewUser";
 import RegistrationSuccess from "./static/RegistrationSuccess";
 import RegistrationFailure from "./static/RegistrationFailure";
@@ -22,7 +20,6 @@ import "../css/App.css";
 /**
  * Includes conditional application routing and user registration logic after app initialization.
  * 
- * @author syuki
  */
 export const InitializedContent = ({contract, currentAddress}) => {
 
@@ -67,7 +64,7 @@ export const InitializedContent = ({contract, currentAddress}) => {
                     console.log(error);
                     setIsAuth(retailerResult || producerResult || false);
                 });
-    }, []);
+    }, [contract, currentAddress]);
 
     function updateIsAuth(newIsAuth){
         setIsAuth(newIsAuth);
@@ -78,7 +75,7 @@ export const InitializedContent = ({contract, currentAddress}) => {
     }
 
     //Registered users are redirected to the home page, un-registered users go to the sign-up page.
-    if(isAuth != undefined) {
+    if(isAuth !== undefined) {
         return (
             <Router>
                 <Header isAuthenticated={isAuth} userType={userType} contract={contract} currentAddress={currentAddress} /> 
@@ -91,10 +88,8 @@ export const InitializedContent = ({contract, currentAddress}) => {
                         <Route exact path="/registration-success" element={<RegistrationSuccess isAuthenticated={isAuth} />} />   
                         <Route exact path="/registration-failure" element={<RegistrationFailure isAuthenticated={isAuth} />} />   
                         <Route exact path="/" element={<HomeWrapper contract={contract} currentAddress={currentAddress} isAuthenticated={isAuth} userType={userType} updateAuth={updateIsAuth} updateUserType={updateUserType} />} /> 
-                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </div>
-                <Footer isAuthenticated={isAuth} />
             </Router>
         );
     } else {

@@ -18,7 +18,6 @@ import '../../css/App.css';
 /**
  * Header component. Present in every page when user is an authenticated one.
  * 
- * @author syuki
  */
 export default function Header({isAuthenticated, userType, contract, currentAddress}) {
 
@@ -27,12 +26,12 @@ export default function Header({isAuthenticated, userType, contract, currentAddr
     const [profilePicture, setProfilePicture] = useState();
 
     function toggleProfile(event) {
-        let profilePicturePath = "/profile-designs/Producer.png";
-        if(userType == USER_TYPES[1]){
-            profilePicturePath = "/profile-designs/Distributor.png";
+        let profilePicturePath = "";
+        if(userType === USER_TYPES[1]){
+            profilePicturePath = "";
         } 
-        if(userType == USER_TYPES[2]){
-            profilePicturePath = "/profile-designs/Retailer.png";
+        if(userType === USER_TYPES[2]){
+            profilePicturePath = "";
         } 
         setProfilePicture(profilePicturePath);
         setShowProfile(!showProfile);

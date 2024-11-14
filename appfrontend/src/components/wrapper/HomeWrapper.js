@@ -6,7 +6,6 @@ import Home from "../Home";
 /**
  * Wrapper component for home page to use certain hooks.
  * 
- * @author syuki
  */
 const HomeWrapper = props => {
     //Checks for registration status received through navigate() right after

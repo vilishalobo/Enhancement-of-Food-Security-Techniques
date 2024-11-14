@@ -18,7 +18,6 @@ import "../../css/NewUser.css";
  * Renders upon successful registration. 
  * Redirects to the home page after delay.
  * 
- * @author syuki
  */
 const RegistrationSuccess = ({isAuthenticated}) => {
 
@@ -29,7 +28,7 @@ const RegistrationSuccess = ({isAuthenticated}) => {
         if(isAuthenticated){
         navigate('/');
         }
-    }, []);
+    }, [navigate, isAuthenticated]);
 
     //Sends out registration status to the redirected home page.  
     useEffect(() => {
@@ -41,7 +40,7 @@ const RegistrationSuccess = ({isAuthenticated}) => {
             }
           })
         }, 5000)
-    }, []);
+    }, [navigate, location.state.userType]);
 
     return (
         <div className="new-user-body">

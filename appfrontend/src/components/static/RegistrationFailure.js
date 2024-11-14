@@ -18,7 +18,6 @@ import "../../css/NewUser.css";
  * Renders upon failed registration. 
  * Redirects to the sign-up page after delay.
  * 
- * @author syuki
  */
 const RegistrationFailure = ({isAuthenticated}) => {
 

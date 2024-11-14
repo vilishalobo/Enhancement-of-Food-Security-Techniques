@@ -23,7 +23,6 @@ import "../css/NewUser.css";
 /**
  * Renders the registration confirmation page for new addresses.
  * 
- * @author syuki
  */
 const ConfirmRegistration = ({contract, currentAddress, isAuthenticated}) => {
 

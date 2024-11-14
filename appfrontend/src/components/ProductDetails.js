@@ -13,7 +13,6 @@ import "../css/PopUpModal.css";
 /**
  * Renders product batch details.
  * 
- * @author syuki
  */
 export default class ProductDetails extends React.Component {
 
